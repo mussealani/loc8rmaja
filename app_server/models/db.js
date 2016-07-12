@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
-var gracefulShutdown;
-var dbURI = 'mongodb://localhost/Loc8r';
-if (process.env.NODE_ENV === 'production') {
-    dbURI = process.env.MONGOLAB_URI;
-}
+var gracefulShutdown, dbURI;
+// var dbURI = 'mongodb://localhost/Loc8r';
+// if (process.env.NODE_ENV === 'production') {
+//     dbURI = process.env.MONGOLAB_URI;
+// }
+
+process.env.NODE_ENV === 'production' ? dbURI = process.env.MONGOLAB_URI : dbURI = 'mongodb://localhost/Loc8r';
 
 mongoose.connect(dbURI);
 
