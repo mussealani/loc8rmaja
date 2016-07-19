@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+
 // require db connection file
 require('./app_api/models/db');
 
@@ -15,7 +16,12 @@ var routesApi = require('./app_api/routes/index');
 var users = require('./app_server/routes/users');
 
 var app = express();
+app.disable('etag');
 
+// app.use(function (req, res, next) {
+//   req.headers['if-none-match'] = 'no-match-for-this';
+//   next();
+// });
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'jade');

@@ -3,9 +3,8 @@ var apiOptions = {
     server: "http://localhost:3000"
 };
 if (process.env.NODE_ENV === 'production') {
-    apiOptions.server = "http://sleepy-cove-97906.herokuapp.com/";
+    apiOptions.server = "http://sleepy-cove-97906.herokuapp.com";
 }
-
 // renderHomepage method
 var renderHomepage = function(req, res, responseBody) {
     res.render('locations-list', {
@@ -18,6 +17,7 @@ var renderHomepage = function(req, res, responseBody) {
         locations: responseBody
     });
 };
+
 
 module.exports.homelist = function(req, res) {
     var requestOptions, path;
@@ -32,9 +32,14 @@ module.exports.homelist = function(req, res) {
             maxDistance: 20
         }
     };
-    request(requestOptions, function(err, response, body) {
-        renderHomepage(req, res, body);
-    });
+    request(
+        requestOptions,
+        function(err, response, body) {
+            if (!err && response.statusCode == 200) {
+                renderHomepage(req, res, body);
+            }
+        });
+    console.log(requestOptions.url)
 };
 
 module.exports.locationInfo = function(req, res) {
